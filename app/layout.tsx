@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         description: 'أنشئ صفحة صدقة جارية رقمية للمتوفي',
     },
     viewport: 'width=device-width, initial-scale=1',
-    themeColor: '#0F3D2E',
+    themeColor: '#10b981',
 };
 
 export default function RootLayout({

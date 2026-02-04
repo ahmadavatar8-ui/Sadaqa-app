@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HomePage() {
     return (
@@ -37,30 +38,48 @@ export default function HomePage() {
 
             {/* Content */}
             <div className="relative z-10 max-w-4xl mx-auto text-center">
-                {/* Premium Logo with Glow */}
+                {/* Premium Logo Image with Glow - Ruqah Calligraphy */}
                 <motion.div
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                     className="mb-16"
                 >
-                    <motion.h1
-                        className="font-amiri text-8xl md:text-9xl font-bold gradient-text mb-6 animate-float drop-shadow-2xl"
+                    <motion.div
+                        className="relative inline-block"
                         animate={{
-                            textShadow: [
-                                '0 0 20px rgba(200, 169, 81, 0.3)',
-                                '0 0 40px rgba(200, 169, 81, 0.5)',
-                                '0 0 20px rgba(200, 169, 81, 0.3)',
-                            ],
+                            y: [0, -10, 0],
                         }}
                         transition={{
-                            duration: 3,
+                            duration: 4,
                             repeat: Infinity,
                             ease: 'easeInOut',
                         }}
                     >
-                        صدقة
-                    </motion.h1>
+                        <motion.div
+                            animate={{
+                                filter: [
+                                    'drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))',
+                                    'drop-shadow(0 0 40px rgba(234, 179, 8, 0.6))',
+                                    'drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))',
+                                ],
+                            }}
+                            transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                            }}
+                        >
+                            <Image
+                                src="/sadaqa-logo.png"
+                                alt="صدقة - Sadaqa"
+                                width={350}
+                                height={350}
+                                priority
+                                className="w-64 h-64 md:w-80 md:h-80 object-contain mx-auto"
+                            />
+                        </motion.div>
+                    </motion.div>
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: '12rem' }}
@@ -98,28 +117,14 @@ export default function HomePage() {
                 >
                     <Link href="/create">
                         <motion.button
-                            className="group relative px-14 py-6 bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 text-pearl-50 text-2xl font-bold rounded-2xl overflow-hidden shadow-emerald transition-smooth"
-                            whileHover={{ scale: 1.08, y: -4 }}
+                            className="group relative px-14 py-6 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white text-2xl font-bold rounded-2xl overflow-hidden shadow-emerald transition-smooth hover:shadow-2xl"
+                            whileHover={{ scale: 1.05, y: -3 }}
                             whileTap={{ scale: 0.98 }}
-                            animate={{
-                                boxShadow: [
-                                    '0 10px 40px rgba(15, 61, 46, 0.3)',
-                                    '0 15px 60px rgba(15, 61, 46, 0.5)',
-                                    '0 10px 40px rgba(15, 61, 46, 0.3)',
-                                ],
-                            }}
-                            transition={{
-                                boxShadow: {
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    ease: 'easeInOut',
-                                },
-                            }}
                         >
-                            {/* Animated gradient overlay on hover */}
+                            {/* Subtle overlay on hover */}
                             <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-emerald-700 to-gold-600 opacity-0 group-hover:opacity-100"
-                                transition={{ duration: 0.4 }}
+                                className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 opacity-0 group-hover:opacity-100"
+                                transition={{ duration: 0.3 }}
                             />
                             <span className="relative z-10 flex items-center gap-3 font-cairo">
                                 ابدأ الآن

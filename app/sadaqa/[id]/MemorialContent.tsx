@@ -19,7 +19,8 @@ interface Memorial {
 }
 
 export default function MemorialContent({ memorial }: { memorial: Memorial }) {
-    const [counters, setCounters] = useState(memorial.counters || {
+    // Per-session counters: Always start from 0 for each visitor
+    const [counters, setCounters] = useState({
         subhanAllah: 0,
         alhamdulillah: 0,
         allahuAkbar: 0,
@@ -34,40 +35,21 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
 
         setUpdating(dhikrType);
 
-        // Optimistic update
+        // Update counter locally only (no database update)
         setCounters((prev) => ({
             ...prev,
             [dhikrType]: (prev as any)[dhikrType] + 1,
         }));
 
-        try {
-            const response = await fetch('/api/counter', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ memorialId: memorial.id, dhikrType }),
-            });
-
-            if (!response.ok) {
-                // Revert on error
-                setCounters((prev) => ({
-                    ...prev,
-                    [dhikrType]: (prev as any)[dhikrType] - 1,
-                }));
-                throw new Error('Failed to update counter');
-            }
-
-            const data = await response.json();
-            setCounters(data.counters);
-
-            // Haptic feedback (mobile only)
-            if ('vibrate' in navigator) {
-                navigator.vibrate(50);
-            }
-        } catch (error) {
-            console.error('Error updating counter:', error);
-        } finally {
-            setUpdating(null);
+        // Haptic feedback (mobile only)
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50);
         }
+
+        // Small delay for UX
+        setTimeout(() => {
+            setUpdating(null);
+        }, 300);
     };
 
     return (
@@ -111,15 +93,16 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                 >
                     {/* Circular Image with Premium Border */}
                     <div className="relative w-56 h-56 mx-auto mb-8 group">
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 animate-glow-gold" />
-                        <div className="relative w-full h-full p-2">
-                            <div className="w-full h-full rounded-full overflow-hidden border-4 border-pearl-50 shadow-gold">
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 opacity-80 blur-sm group-hover:opacity-100 transition-smooth" />
+                        <div className="relative w-full h-full p-1.5">
+                            <div className="w-full h-full rounded-full overflow-hidden border-4 border-white shadow-gold">
                                 <Image
                                     src={memorial.imageUrl}
                                     alt={memorial.name}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                                     priority
+                                    style={{ borderRadius: '50%' }}
                                 />
                             </div>
                         </div>
@@ -244,8 +227,8 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 1.1 + index * 0.1 }}
                                 className={`relative overflow-hidden p-8 rounded-2xl font-bold text-xl transition-smooth ${updating === dhikr.key
-                                        ? 'bg-gray-300 cursor-wait'
-                                        : 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-pearl-50 shadow-emerald hover:shadow-gold'
+                                    ? 'bg-gray-400 cursor-wait opacity-70'
+                                    : 'bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:via-emerald-700 hover:to-emerald-800 text-white shadow-emerald hover:shadow-2xl'
                                     }`}
                             >
                                 {/* Shimmer effect */}
@@ -256,7 +239,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                 <div className="flex flex-col items-center gap-4 relative z-10">
                                     <span className="text-2xl font-amiri leading-relaxed">{dhikr.text}</span>
                                     <div className="flex items-center gap-2 text-lg">
-                                        <span className="bg-pearl-50/25 backdrop-blur-sm px-6 py-2 rounded-full font-cairo border border-pearl-50/30">
+                                        <span className="bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full font-cairo border border-white/50 text-emerald-700 font-bold">
                                             {(counters as any)[dhikr.key].toLocaleString('ar-SA')}
                                         </span>
                                     </div>
@@ -266,7 +249,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     </div>
 
                     <div className="mt-10 text-center">
-                        <div className="inline-block px-8 py-3 bg-gold-500/20 backdrop-blur-sm rounded-full border border-gold-400/30">
+                        <div className="inline-block px-8 py-3 bg-gradient-to-r from-gold-500/20 to-gold-600/20 backdrop-blur-sm rounded-full border-2 border-gold-500/40">
                             <p className="text-emerald-700 font-semibold font-cairo text-lg">
                                 مجموع الأذكار: {' '}
                                 <span className="text-gold-600 font-bold text-xl">
@@ -302,7 +285,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                         }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-10 py-4 bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-charcoal-800 rounded-2xl hover:from-gold-500 hover:via-gold-600 hover:to-gold-700 transition-smooth font-bold text-lg shadow-gold hover:shadow-2xl font-cairo animate-glow-gold"
+                        className="px-10 py-4 bg-gradient-to-br from-gold-500 via-gold-600 to-gold-700 text-white rounded-2xl hover:from-gold-600 hover:via-gold-700 hover:to-gold-800 transition-smooth font-bold text-lg shadow-gold hover:shadow-2xl font-cairo"
                     >
                         <span className="flex items-center gap-2 justify-center">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

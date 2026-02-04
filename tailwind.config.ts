@@ -9,54 +9,54 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Premium Islamic Color Palette
+        // Premium Islamic Color Palette - Enhanced & Vibrant
         emerald: {
-          50: '#e8f3ed',
-          100: '#d1e7db',
-          200: '#a3cfb7',
-          300: '#75b793',
-          400: '#479f6f',
-          500: '#0F3D2E', // Deep Emerald - Primary
-          600: '#0c3125',
-          700: '#09251c',
-          800: '#061913',
-          900: '#030c0a',
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981', // Vibrant Emerald - Primary
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
         },
         gold: {
-          50: '#faf8f0',
-          100: '#f5f1e1',
-          200: '#ebe3c3',
-          300: '#e1d5a5',
-          400: '#d7c787',
-          500: '#C8A951', // Soft Gold - Accent
-          600: '#a38741',
-          700: '#7e6531',
-          800: '#594321',
-          900: '#342111',
+          50: '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15',
+          500: '#eab308', // Rich Gold - Accent
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
+          900: '#713f12',
         },
         pearl: {
-          50: '#F8F6F1', // Warm Off White - Background
-          100: '#f4f2ed',
-          200: '#e9e5db',
-          300: '#ded8c9',
-          400: '#d3cbb7',
-          500: '#c8bea5',
-          600: '#9d9584',
-          700: '#726c63',
-          800: '#474342',
-          900: '#1c1a21',
+          50: '#fafaf9', // Clean Off-White - Background
+          100: '#f5f5f4',
+          200: '#e7e5e4',
+          300: '#d6d3d1',
+          400: '#a8a29e',
+          500: '#78716c',
+          600: '#57534e',
+          700: '#44403c',
+          800: '#292524',
+          900: '#1c1917',
         },
         charcoal: {
-          50: '#f5f5f5',
-          100: '#e0e0e0',
-          200: '#c2c2c2',
-          300: '#a3a3a3',
-          400: '#858585',
-          500: '#666666',
-          600: '#4d4d4d',
-          700: '#333333',
-          800: '#1E1E1E', // Charcoal - Text
-          900: '#0a0a0a',
+          50: '#fafafa',
+          100: '#f4f4f5',
+          200: '#e4e4e7',
+          300: '#d4d4d8',
+          400: '#a1a1aa',
+          500: '#71717a',
+          600: '#52525b',
+          700: '#3f3f46',
+          800: '#27272a', // Deep Charcoal - Text
+          900: '#18181b',
         },
       },
       fontFamily: {
@@ -92,12 +92,12 @@ const config: Config = {
           '50%': { transform: 'translateY(-12px)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 20px rgba(15, 61, 46, 0.4), 0 0 40px rgba(15, 61, 46, 0.2)' },
-          '100%': { boxShadow: '0 0 30px rgba(15, 61, 46, 0.6), 0 0 60px rgba(15, 61, 46, 0.3)' },
+          '0%': { boxShadow: '0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2)' },
+          '100%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.3)' },
         },
         glowGold: {
-          '0%': { boxShadow: '0 8px 30px rgba(200, 169, 81, 0.25)' },
-          '100%': { boxShadow: '0 12px 50px rgba(200, 169, 81, 0.45)' },
+          '0%': { boxShadow: '0 8px 30px rgba(234, 179, 8, 0.3)' },
+          '100%': { boxShadow: '0 12px 50px rgba(234, 179, 8, 0.5)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% center' },
@@ -116,8 +116,8 @@ const config: Config = {
         xs: '2px',
       },
       backgroundImage: {
-        'islamic-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F3D2E' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-        'radial-emerald': 'radial-gradient(circle at center, #0F3D2E 0%, #081C15 100%)',
+        'islamic-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        'radial-emerald': 'radial-gradient(circle at center, #10b981 0%, #059669 100%)',
       },
     },
   },
