@@ -60,7 +60,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
         <main className="min-h-screen py-12 px-4">
             <div className="max-w-4xl mx-auto">
                 {/* ============================================
-                    HERO SECTION - Circular Photo & Name
+                    HERO SECTION - Premium Circular Avatar
                 ============================================ */}
                 <motion.section
                     initial={{ opacity: 0, y: -20 }}
@@ -68,47 +68,72 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    {/* CIRCULAR AVATAR with Gold Ring & Glow */}
+                    {/* ===== PREMIUM CIRCULAR AVATAR ===== */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="relative w-56 h-56 mx-auto mb-10"
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="relative w-60 h-60 mx-auto mb-10"
                     >
-                        {/* Outer Glow Effect */}
+                        {/* === Layer 1: Outer Soft Glow === */}
                         <div
-                            className="absolute inset-0 rounded-full"
+                            className="absolute inset-0 rounded-full animate-pulse"
                             style={{
-                                background: 'radial-gradient(circle, rgba(199, 167, 74, 0.3) 0%, transparent 70%)',
-                                transform: 'scale(1.2)',
+                                background: 'radial-gradient(circle, rgba(199, 167, 74, 0.25) 0%, rgba(199, 167, 74, 0.1) 40%, transparent 70%)',
+                                transform: 'scale(1.25)',
+                                filter: 'blur(8px)',
                             }}
                         />
 
-                        {/* Gold Ring Border */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent-400 via-accent-500 to-accent-600 p-1 shadow-lg">
-                            {/* Inner White Border */}
-                            <div className="w-full h-full rounded-full bg-white p-1">
-                                {/* Image or Avatar Container - PERFECT CIRCLE */}
-                                <div className="w-full h-full rounded-full overflow-hidden">
+                        {/* === Layer 2: Gold Gradient Ring === */}
+                        <div
+                            className="absolute inset-0 rounded-full p-1"
+                            style={{
+                                background: 'linear-gradient(135deg, #C7A74A 0%, #E8D5A3 25%, #C7A74A 50%, #A88B3D 75%, #C7A74A 100%)',
+                                boxShadow: '0 8px 32px rgba(199, 167, 74, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.2)',
+                            }}
+                        >
+                            {/* === Layer 3: White Inner Border === */}
+                            <div className="w-full h-full rounded-full bg-white p-1.5 shadow-inner">
+                                {/* === Layer 4: Image/Avatar Container - PERFECT CIRCLE === */}
+                                <div className="w-full h-full rounded-full overflow-hidden relative">
                                     {memorial.imageUrl ? (
-                                        /* Uploaded Photo - Perfect Circle */
+                                        /* ===== UPLOADED PHOTO ===== */
                                         <Image
                                             src={memorial.imageUrl}
                                             alt={memorial.name}
                                             fill
+                                            sizes="240px"
                                             className="object-cover"
                                             priority
-                                            style={{ borderRadius: '50%' }}
+                                            style={{
+                                                borderRadius: '50%',
+                                            }}
                                         />
                                     ) : (
-                                        /* Default Avatar Placeholder */
+                                        /* ===== DEFAULT AVATAR - First Letter ===== */
                                         <div
-                                            className="w-full h-full rounded-full flex items-center justify-center"
+                                            className="w-full h-full rounded-full flex items-center justify-center relative"
                                             style={{
-                                                background: 'linear-gradient(135deg, #DFF5EE 0%, #c8ebe0 100%)',
+                                                background: 'linear-gradient(145deg, #DFF5EE 0%, #c8ebe0 50%, #b5e0d3 100%)',
                                             }}
                                         >
-                                            <span className="text-primary-500 font-amiri text-7xl font-bold drop-shadow-sm">
+                                            {/* Subtle inner shadow for depth */}
+                                            <div
+                                                className="absolute inset-0 rounded-full"
+                                                style={{
+                                                    boxShadow: 'inset 0 4px 12px rgba(0, 0, 0, 0.05)',
+                                                }}
+                                            />
+                                            {/* First Letter */}
+                                            <span
+                                                className="relative z-10 font-amiri font-bold"
+                                                style={{
+                                                    fontSize: '5rem',
+                                                    color: '#0F6B55',
+                                                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                                }}
+                                            >
                                                 {getFirstLetter(memorial.name)}
                                             </span>
                                         </div>
@@ -118,20 +143,25 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                         </div>
                     </motion.div>
 
-                    {/* Name */}
+                    {/* ===== NAME ===== */}
                     <motion.h1
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
                         className="font-amiri text-5xl md:text-6xl font-bold text-ink-900 mb-4"
                     >
                         {memorial.name}
                     </motion.h1>
 
-                    {/* Gold Divider */}
-                    <div className="divider-gold mb-4" />
+                    {/* ===== GOLD DIVIDER ===== */}
+                    <motion.div
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{ opacity: 1, scaleX: 1 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="divider-gold mb-4"
+                    />
 
-                    {/* Prayer for deceased */}
+                    {/* ===== PRAYER FOR DECEASED ===== */}
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -188,8 +218,8 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                         <motion.div
                             key={surahIndex}
                             className="card"
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 + surahIndex * 0.1 }}
                         >
                             <h3 className="font-amiri text-3xl md:text-4xl font-bold text-primary-500 mb-6 text-center">
