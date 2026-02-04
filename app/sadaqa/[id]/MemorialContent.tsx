@@ -60,7 +60,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
         <main className="min-h-screen py-12 px-4">
             <div className="max-w-4xl mx-auto">
                 {/* ============================================
-                    HERO SECTION - Photo & Name
+                    HERO SECTION - Circular Photo & Name
                 ============================================ */}
                 <motion.section
                     initial={{ opacity: 0, y: -20 }}
@@ -69,13 +69,18 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     className="text-center mb-16"
                 >
                     {/* CIRCULAR AVATAR with Gold Ring & Glow */}
-                    <div className="relative w-56 h-56 mx-auto mb-10">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className="relative w-56 h-56 mx-auto mb-10"
+                    >
                         {/* Outer Glow Effect */}
                         <div
                             className="absolute inset-0 rounded-full"
                             style={{
                                 background: 'radial-gradient(circle, rgba(199, 167, 74, 0.3) 0%, transparent 70%)',
-                                transform: 'scale(1.15)',
+                                transform: 'scale(1.2)',
                             }}
                         />
 
@@ -91,7 +96,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                             src={memorial.imageUrl}
                                             alt={memorial.name}
                                             fill
-                                            className="object-cover rounded-full"
+                                            className="object-cover"
                                             priority
                                             style={{ borderRadius: '50%' }}
                                         />
@@ -111,7 +116,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Name */}
                     <motion.h1
@@ -141,7 +146,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                 </motion.section>
 
                 {/* ============================================
-                    DUA SECTION - Fixed Gender-Specific Text
+                    DUA SECTION - Full Content, NO SCROLL
                 ============================================ */}
                 <motion.section
                     initial={{ opacity: 0 }}
@@ -154,15 +159,15 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     </h2>
                     <div className="divider-gold mb-10" />
 
-                    {/* Scrollable Dua Container */}
-                    <div className="max-h-[500px] overflow-y-auto pr-4 space-y-6">
+                    {/* Dua Content - FULLY VISIBLE, NO INTERNAL SCROLL */}
+                    <div className="space-y-8">
                         {duaTexts.map((dua, index) => (
                             <motion.p
                                 key={index}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4 + index * 0.08 }}
-                                className="text-xl md:text-2xl leading-[2.2] text-ink-900 text-center font-cairo px-4"
+                                className="text-xl md:text-2xl leading-[2.2] text-ink-900 text-center font-cairo"
                             >
                                 {dua}
                             </motion.p>

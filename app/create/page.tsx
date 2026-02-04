@@ -17,10 +17,11 @@ export default function CreatePage() {
     const [loading, setLoading] = useState(false);
 
     const validateName = (value: string): string | undefined => {
-        if (!value.trim()) return 'الاسم مطلوب';
-        const words = value.trim().split(/\s+/);
-        if (words.length !== 4) return 'يجب إدخال اسم رباعي (4 كلمات)';
-        if (!/^[\u0600-\u06FF\s]+$/.test(value)) {
+        const trimmed = value.trim();
+        if (!trimmed) return 'الاسم مطلوب';
+        const words = trimmed.split(/\s+/);
+        if (words.length > 4) return 'الرجاء إدخال 1 إلى 4 أسماء فقط';
+        if (!/^[\u0600-\u06FF\s]+$/.test(trimmed)) {
             return 'يجب أن يحتوي الاسم على أحرف عربية فقط';
         }
         return undefined;
@@ -62,6 +63,7 @@ export default function CreatePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Validate required fields only (gender + name)
         const nameError = validateName(name);
         const genderError = !gender ? 'يرجى اختيار الجنس' : undefined;
 
@@ -70,12 +72,15 @@ export default function CreatePage() {
             return;
         }
 
+        // Image is OPTIONAL - form can submit without it
         setLoading(true);
 
         try {
             const formData = new FormData();
             formData.append('name', name.trim());
             formData.append('gender', gender!);
+
+            // Only append image if provided
             if (image) {
                 formData.append('image', image);
             }
@@ -123,7 +128,7 @@ export default function CreatePage() {
                     onSubmit={handleSubmit}
                     className="card space-y-8"
                 >
-                    {/* Gender Selection - REQUIRED */}
+                    {/* ========== GENDER SELECTION (REQUIRED) ========== */}
                     <div>
                         <label className="block text-lg font-bold text-ink-900 mb-4">
                             جنس المتوفي <span className="text-red-500">*</span>
@@ -136,8 +141,8 @@ export default function CreatePage() {
                                     setErrors((prev) => ({ ...prev, gender: undefined }));
                                 }}
                                 className={`p-5 rounded-btn font-bold text-lg transition-all duration-300 ${gender === 'MALE'
-                                        ? 'bg-primary-500 text-white shadow-btn'
-                                        : 'bg-surface-100 text-ink-600 hover:bg-surface-200'
+                                    ? 'bg-primary-500 text-white shadow-btn'
+                                    : 'bg-surface-100 text-ink-600 hover:bg-surface-200'
                                     }`}
                             >
                                 ذكر
@@ -149,70 +154,89 @@ export default function CreatePage() {
                                     setErrors((prev) => ({ ...prev, gender: undefined }));
                                 }}
                                 className={`p-5 rounded-btn font-bold text-lg transition-all duration-300 ${gender === 'FEMALE'
-                                        ? 'bg-primary-500 text-white shadow-btn'
-                                        : 'bg-surface-100 text-ink-600 hover:bg-surface-200'
+                                    ? 'bg-primary-500 text-white shadow-btn'
+                                    : 'bg-surface-100 text-ink-600 hover:bg-surface-200'
                                     }`}
                             >
                                 أنثى
                             </button>
                         </div>
                         {errors.gender && (
-                            <p className="mt-2 text-red-500 text-sm">{errors.gender}</p>
+                            <p className="mt-3 text-red-500 text-sm font-medium">{errors.gender}</p>
                         )}
                     </div>
 
-                    {/* Name Input */}
+                    {/* ========== NAME INPUT (REQUIRED) ========== */}
                     <div>
                         <label htmlFor="name" className="block text-lg font-bold text-ink-900 mb-2">
-                            اسم المتوفي الرباعي <span className="text-red-500">*</span>
+                            اسم المتوفي <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
                             id="name"
                             value={name}
                             onChange={handleNameChange}
-                            placeholder="مثال: أحمد محمد علي حسن"
+                            placeholder="أدخل اسم المتوفى (يمكن اسم واحد أو حتى أربعة أسماء)"
                             className={`input-field ${errors.name ? 'border-red-400 bg-red-50' : ''}`}
                             dir="rtl"
                         />
                         {errors.name && (
-                            <p className="mt-2 text-red-500 text-sm">{errors.name}</p>
+                            <p className="mt-2 text-red-500 text-sm font-medium">{errors.name}</p>
                         )}
                         <p className="mt-2 text-ink-400 text-sm">
-                            يجب إدخال 4 كلمات (الاسم + اسم الأب + اسم الجد + اسم العائلة)
+                            يمكنك كتابة الاسم الكامل أو اسم واحد أو أي عدد يصل إلى أربعة أسماء
                         </p>
                     </div>
 
-                    {/* Image Upload - OPTIONAL */}
+                    {/* ========== IMAGE UPLOAD (OPTIONAL) ========== */}
                     <div>
                         <label className="block text-lg font-bold text-ink-900 mb-2">
-                            صورة المتوفي <span className="text-ink-400 font-normal">(اختياري)</span>
+                            صورة المتوفي <span className="text-ink-400 font-normal text-base">(اختياري)</span>
                         </label>
 
                         <div className="flex flex-col items-center gap-6">
-                            {/* Preview Area */}
-                            <div className="w-48 h-48 relative">
-                                {imagePreview ? (
-                                    /* Uploaded Image with Gold Ring */
-                                    <div className="w-full h-full rounded-full overflow-hidden border-4 border-accent-500 shadow-glow-gold">
-                                        <Image
-                                            src={imagePreview}
-                                            alt="معاينة"
-                                            fill
-                                            className="object-cover"
-                                        />
+                            {/* Preview Area - Circular */}
+                            <div className="relative w-48 h-48">
+                                {/* Outer Glow */}
+                                <div
+                                    className="absolute inset-0 rounded-full"
+                                    style={{
+                                        background: 'radial-gradient(circle, rgba(199, 167, 74, 0.2) 0%, transparent 70%)',
+                                        transform: 'scale(1.1)',
+                                    }}
+                                />
+
+                                {/* Gold Ring */}
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent-400 to-accent-500 p-1">
+                                    <div className="w-full h-full rounded-full bg-white p-1">
+                                        <div className="w-full h-full rounded-full overflow-hidden">
+                                            {imagePreview ? (
+                                                <Image
+                                                    src={imagePreview}
+                                                    alt="معاينة"
+                                                    fill
+                                                    className="object-cover rounded-full"
+                                                    style={{ borderRadius: '50%' }}
+                                                />
+                                            ) : (
+                                                /* Default Avatar Preview */
+                                                <div
+                                                    className="w-full h-full rounded-full flex items-center justify-center"
+                                                    style={{
+                                                        background: 'linear-gradient(135deg, #DFF5EE 0%, #c8ebe0 100%)',
+                                                    }}
+                                                >
+                                                    <span className="text-primary-500 font-amiri text-6xl font-bold">
+                                                        {name.trim() ? getFirstLetter(name) : 'ص'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                ) : (
-                                    /* Default Avatar Placeholder */
-                                    <div className="w-full h-full rounded-full bg-primary-100 border-4 border-primary-200 flex items-center justify-center">
-                                        <span className="text-primary-500 font-amiri text-6xl font-bold">
-                                            {name.trim() ? getFirstLetter(name) : 'ص'}
-                                        </span>
-                                    </div>
-                                )}
+                                </div>
                             </div>
 
-                            {/* Upload Controls */}
+                            {/* Upload/Remove Controls */}
                             {imagePreview ? (
                                 <button
                                     type="button"
@@ -226,8 +250,8 @@ export default function CreatePage() {
                                 </button>
                             ) : (
                                 <label className="cursor-pointer">
-                                    <div className="px-6 py-3 bg-surface-100 text-ink-600 rounded-btn hover:bg-surface-200 transition-all font-bold text-center">
-                                        اختر صورة
+                                    <div className="px-8 py-3 bg-surface-100 text-ink-600 rounded-btn hover:bg-surface-200 transition-all font-bold text-center border-2 border-dashed border-ink-200 hover:border-primary-400">
+                                        اختر صورة (اختياري)
                                     </div>
                                     <input
                                         type="file"
@@ -239,19 +263,22 @@ export default function CreatePage() {
                             )}
                         </div>
 
-                        {/* UX Note */}
-                        <p className="mt-4 text-ink-400 text-sm text-center bg-surface-100 p-4 rounded-btn">
-                            رفع الصورة اختياري. في حال عدم رفع صورة سيتم استخدام صورة رمزية افتراضية تحتوي على الحرف الأول من اسم المتوفي.
-                        </p>
+                        {/* UX Note - Image is Optional */}
+                        <div className="mt-6 p-4 bg-primary-500/5 rounded-btn border border-primary-500/10">
+                            <p className="text-ink-600 text-sm text-center leading-relaxed">
+                                <span className="font-bold text-primary-500">ملاحظة:</span>{' '}
+                                رفع الصورة اختياري. في حال عدم رفع صورة سيتم استخدام صورة رمزية افتراضية تحتوي على الحرف الأول من اسم المتوفي.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* ========== SUBMIT BUTTON ========== */}
                     <button
                         type="submit"
                         disabled={loading}
                         className={`w-full py-5 rounded-btn text-xl font-bold text-white transition-all duration-300 ${loading
-                                ? 'bg-ink-300 cursor-not-allowed'
-                                : 'bg-primary-500 hover:bg-primary-600 shadow-btn hover:shadow-btn-hover'
+                            ? 'bg-ink-300 cursor-not-allowed'
+                            : 'bg-primary-500 hover:bg-primary-600 shadow-btn hover:shadow-btn-hover'
                             }`}
                     >
                         {loading ? (

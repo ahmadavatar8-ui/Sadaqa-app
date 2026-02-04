@@ -7,12 +7,12 @@ export const memorialSchema = z.object({
         .refine(
             (name) => {
                 const words = name.trim().split(/\s+/);
-                return words.length === 4;
+                return words.length >= 1 && words.length <= 4;
             },
-            { message: 'يجب إدخال اسم رباعي (4 كلمات بالضبط)' }
+            { message: 'الرجاء إدخال 1 إلى 4 أسماء فقط' }
         )
         .refine(
-            (name) => /^[\u0600-\u06FF\s]+$/.test(name),
+            (name) => /^[\u0600-\u06FF\s]+$/.test(name.trim()),
             { message: 'يجب أن يحتوي الاسم على أحرف عربية فقط' }
         ),
     gender: z.enum(['MALE', 'FEMALE'], {
