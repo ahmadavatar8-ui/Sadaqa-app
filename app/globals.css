@@ -2,150 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-ivory-50 bg-islamic-pattern;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    overflow-x: hidden;
-  }
+/* ========================================
+   GLOBAL BASE STYLES
+   ======================================== */
 
-  /* Smooth, calm scrolling */
+@layer base {
   html {
     scroll-behavior: smooth;
   }
+
+  body {
+    @apply bg-background text-text-primary;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F6B55' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
+
+/* ========================================
+   COMPONENT STYLES
+   ======================================== */
+
+@layer components {
+
+  /* Primary Button - HIGHLY VISIBLE */
+  .btn-primary {
+    @apply px-8 py-4 bg-primary-500 text-white font-bold text-lg rounded-btn shadow-btn;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-primary-600 hover:shadow-btn-hover;
+    @apply active:scale-[0.98];
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-8 py-4 bg-transparent border-2 border-primary-500 text-primary-500 font-bold text-lg rounded-btn;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-primary-500 hover:text-white;
+  }
+
+  /* Card Style */
+  .card {
+    @apply bg-white rounded-card shadow-card p-8;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:shadow-card-hover;
+  }
+
+  /* Input Field */
+  .input-field {
+    @apply w-full px-4 py-4 bg-white border-2 border-gray-200 rounded-lg text-lg;
+    @apply transition-all duration-200;
+    @apply focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none;
+  }
+
+  /* Glass Card (subtle) */
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-card shadow-card p-8;
+  }
+}
+
+/* ========================================
+   UTILITY STYLES
+   ======================================== */
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+
+  /* Gold Divider */
+  .divider-gold {
+    @apply h-1 w-24 bg-accent-500 rounded-full mx-auto;
   }
 
-  .rtl {
-    direction: rtl;
-  }
-
-  /* Luxury Glass Effect - Ultra Soft */
-  .glass {
-    background: linear-gradient(135deg,
-        rgba(247, 245, 239, 0.95) 0%,
-        rgba(247, 245, 239, 0.90) 100%);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid rgba(199, 167, 74, 0.08);
-  }
-
-  /* Elegant gradient text */
-  .gradient-text {
-    @apply bg-gradient-to-r from-emerald-600 via-emerald-500 to-gold-500 bg-clip-text text-transparent;
-  }
-
-  /* Ultra-Soft Luxury Shadows */
-  .shadow-emerald {
-    box-shadow: 0 8px 30px rgba(15, 107, 85, 0.08), 0 2px 8px rgba(15, 107, 85, 0.04);
-  }
-
-  .shadow-gold {
-    box-shadow: 0 6px 25px rgba(199, 167, 74, 0.12), 0 2px 8px rgba(199, 167, 74, 0.06);
-  }
-
-  /* Calm, respectful transitions */
-  .transition-smooth {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .transition-luxury {
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-
-  /* Soft Glow Effects */
-  .glow-emerald {
-    box-shadow: 0 0 20px rgba(15, 107, 85, 0.15), 0 0 35px rgba(15, 107, 85, 0.08);
-  }
-
-  .glow-gold {
-    box-shadow: 0 0 20px rgba(199, 167, 74, 0.2), 0 0 35px rgba(199, 167, 74, 0.1);
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 bg-clip-text text-transparent;
   }
 }
 
-/* Custom Luxury Scrollbar */
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-ivory-100;
+  background: #f1f1f1;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-emerald-400 to-emerald-600;
+  background: #0F6B55;
   border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gradient-to-b from-emerald-500 to-emerald-700;
-}
-
-/* Arabic text optimization */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-variant-ligatures: common-ligatures;
-}
-
-/* Luxury Ripple Effect */
-@keyframes ripple {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-/* Soft Luxury Pulse Glow */
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 15px rgba(199, 167, 74, 0.2);
-  }
-
-  50% {
-    box-shadow: 0 0 30px rgba(199, 167, 74, 0.35);
-  }
-}
-
-.ripple {
-  position: relative;
-  overflow: hidden;
-}
-
-.ripple::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 107, 85, 0.15);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  animation: ripple 0.8s ease-out;
-}
-
-/* Elegant Gold Divider */
-.divider-gold {
-  height: 1px;
-  background: linear-gradient(to right,
-      transparent,
-      rgba(199, 167, 74, 0.5),
-      transparent);
+  background: #0c5644;
 }

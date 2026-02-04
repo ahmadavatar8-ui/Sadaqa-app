@@ -27,11 +27,6 @@ export const metadata: Metadata = {
         type: 'website',
         locale: 'ar_SA',
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'صدقة - منصة الصدقة الجارية الرقمية',
-        description: 'أنشئ صفحة صدقة جارية رقمية للمتوفي',
-    },
     viewport: 'width=device-width, initial-scale=1',
     themeColor: '#0F6B55',
 };
