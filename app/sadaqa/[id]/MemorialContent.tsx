@@ -28,7 +28,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
     });
     const [updating, setUpdating] = useState<string | null>(null);
 
-    // Dynamic gender-sensitive duas
+    // Get fixed gender-specific duas
     const duaTexts = getDuaText(memorial.gender);
 
     const handleDhikrClick = (dhikrType: string) => {
@@ -59,66 +59,110 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
     return (
         <main className="min-h-screen py-12 px-4">
             <div className="max-w-4xl mx-auto">
-                {/* Header - Photo & Name */}
+                {/* ============================================
+                    HERO SECTION - Photo & Name
+                ============================================ */}
                 <motion.section
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    {/* Photo or Default Avatar with Gold Ring */}
-                    <div className="relative w-52 h-52 mx-auto mb-8">
-                        {memorial.imageUrl ? (
-                            /* Uploaded Photo */
-                            <div className="w-full h-full rounded-full overflow-hidden border-4 border-accent-500 shadow-glow-gold">
-                                <Image
-                                    src={memorial.imageUrl}
-                                    alt={memorial.name}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                />
+                    {/* CIRCULAR AVATAR with Gold Ring & Glow */}
+                    <div className="relative w-56 h-56 mx-auto mb-10">
+                        {/* Outer Glow Effect */}
+                        <div
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                                background: 'radial-gradient(circle, rgba(199, 167, 74, 0.3) 0%, transparent 70%)',
+                                transform: 'scale(1.15)',
+                            }}
+                        />
+
+                        {/* Gold Ring Border */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent-400 via-accent-500 to-accent-600 p-1 shadow-lg">
+                            {/* Inner White Border */}
+                            <div className="w-full h-full rounded-full bg-white p-1">
+                                {/* Image or Avatar Container - PERFECT CIRCLE */}
+                                <div className="w-full h-full rounded-full overflow-hidden">
+                                    {memorial.imageUrl ? (
+                                        /* Uploaded Photo - Perfect Circle */
+                                        <Image
+                                            src={memorial.imageUrl}
+                                            alt={memorial.name}
+                                            fill
+                                            className="object-cover rounded-full"
+                                            priority
+                                            style={{ borderRadius: '50%' }}
+                                        />
+                                    ) : (
+                                        /* Default Avatar Placeholder */
+                                        <div
+                                            className="w-full h-full rounded-full flex items-center justify-center"
+                                            style={{
+                                                background: 'linear-gradient(135deg, #DFF5EE 0%, #c8ebe0 100%)',
+                                            }}
+                                        >
+                                            <span className="text-primary-500 font-amiri text-7xl font-bold drop-shadow-sm">
+                                                {getFirstLetter(memorial.name)}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        ) : (
-                            /* Default Avatar - First Letter */
-                            <div className="w-full h-full rounded-full bg-gradient-to-br from-primary-100 to-primary-200 border-4 border-accent-500 shadow-glow-gold flex items-center justify-center">
-                                <span className="text-primary-500 font-amiri text-7xl font-bold">
-                                    {getFirstLetter(memorial.name)}
-                                </span>
-                            </div>
-                        )}
+                        </div>
                     </div>
 
                     {/* Name */}
-                    <h1 className="font-amiri text-5xl md:text-6xl font-bold text-ink-900 mb-4">
+                    <motion.h1
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="font-amiri text-5xl md:text-6xl font-bold text-ink-900 mb-4"
+                    >
                         {memorial.name}
-                    </h1>
+                    </motion.h1>
+
+                    {/* Gold Divider */}
                     <div className="divider-gold mb-4" />
-                    <p className="text-xl text-primary-500 font-cairo">
+
+                    {/* Prayer for deceased */}
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="text-xl text-primary-500 font-cairo font-semibold"
+                    >
                         {memorial.gender === 'MALE'
                             ? 'رحمه الله رحمة واسعة وأسكنه فسيح جناته'
                             : 'رحمها الله رحمة واسعة وأسكنها فسيح جناته'
                         }
-                    </p>
+                    </motion.p>
                 </motion.section>
 
-                {/* Dua Section - Gender Sensitive */}
+                {/* ============================================
+                    DUA SECTION - Fixed Gender-Specific Text
+                ============================================ */}
                 <motion.section
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="card mb-8"
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    className="card mb-10"
                 >
                     <h2 className="text-3xl font-bold text-primary-500 mb-8 text-center font-cairo">
-                        الدعاء {memorial.gender === 'MALE' ? 'للميت' : 'للميتة'}
+                        {memorial.gender === 'MALE' ? 'الدعاء للميت' : 'الدعاء للميتة'}
                     </h2>
-                    <div className="space-y-6">
+                    <div className="divider-gold mb-10" />
+
+                    {/* Scrollable Dua Container */}
+                    <div className="max-h-[500px] overflow-y-auto pr-4 space-y-6">
                         {duaTexts.map((dua, index) => (
                             <motion.p
                                 key={index}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.3 + index * 0.1 }}
-                                className="text-xl md:text-2xl leading-loose text-ink-900 text-center font-cairo"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 + index * 0.08 }}
+                                className="text-xl md:text-2xl leading-[2.2] text-ink-900 text-center font-cairo px-4"
                             >
                                 {dua}
                             </motion.p>
@@ -126,15 +170,23 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     </div>
                 </motion.section>
 
-                {/* Quran Surahs */}
+                {/* ============================================
+                    QURAN SURAHS SECTION
+                ============================================ */}
                 <motion.section
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="space-y-8 mb-8"
+                    transition={{ delay: 0.5 }}
+                    className="space-y-8 mb-10"
                 >
                     {Object.values(QURAN_SURAHS).map((surah, surahIndex) => (
-                        <div key={surahIndex} className="card">
+                        <motion.div
+                            key={surahIndex}
+                            className="card"
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.6 + surahIndex * 0.1 }}
+                        >
                             <h3 className="font-amiri text-3xl md:text-4xl font-bold text-primary-500 mb-6 text-center">
                                 {surah.name}
                             </h3>
@@ -147,23 +199,25 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                     >
                                         {verse}
                                         {verseIndex > 0 && (
-                                            <span className="mx-2 text-accent-500">
+                                            <span className="mx-2 text-accent-500 text-xl">
                                                 ﴿{verseIndex}﴾
                                             </span>
                                         )}
                                     </p>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </motion.section>
 
-                {/* Tasbeeh Counter Section */}
+                {/* ============================================
+                    TASBEEH COUNTER SECTION
+                ============================================ */}
                 <motion.section
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="card mb-8"
+                    transition={{ delay: 0.7 }}
+                    className="card mb-10"
                 >
                     <h2 className="text-3xl font-bold text-primary-500 mb-4 text-center font-cairo">
                         اذكر الله واهدِ الثواب
@@ -175,13 +229,14 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     {/* Counter Grid */}
                     <div className="grid grid-cols-2 gap-4 mb-8">
                         {AZKAR.map((dhikr) => (
-                            <button
+                            <motion.button
                                 key={dhikr.id}
                                 onClick={() => handleDhikrClick(dhikr.key)}
                                 disabled={updating === dhikr.key}
+                                whileTap={{ scale: 0.95 }}
                                 className={`p-6 rounded-card text-center transition-all duration-200 ${updating === dhikr.key
-                                        ? 'bg-ink-200 cursor-wait scale-95'
-                                        : 'bg-primary-500 hover:bg-primary-600 active:scale-95 shadow-btn'
+                                        ? 'bg-ink-200 cursor-wait'
+                                        : 'bg-primary-500 hover:bg-primary-600 shadow-btn hover:shadow-btn-hover'
                                     }`}
                             >
                                 <span className="block text-xl md:text-2xl font-bold text-white font-amiri mb-3">
@@ -190,7 +245,7 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                                 <span className="inline-block px-6 py-2 bg-white rounded-full text-primary-500 font-bold text-xl min-w-[80px]">
                                     {(counters as any)[dhikr.key]}
                                 </span>
-                            </button>
+                            </motion.button>
                         ))}
                     </div>
 
@@ -205,11 +260,13 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     </div>
                 </motion.section>
 
-                {/* Share Section */}
+                {/* ============================================
+                    SHARE SECTION
+                ============================================ */}
                 <motion.section
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
+                    transition={{ delay: 0.9 }}
                     className="text-center"
                 >
                     <p className="text-ink-400 mb-6 text-lg">
@@ -237,7 +294,9 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     </button>
                 </motion.section>
 
-                {/* Footer */}
+                {/* ============================================
+                    FOOTER
+                ============================================ */}
                 <footer className="mt-16 text-center">
                     <p className="font-amiri text-xl text-primary-500/60">
                         إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
