@@ -2,6 +2,7 @@
   "name": "sadaqa",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,8 +18,7 @@
     "framer-motion": "^11.11.17",
     "uuid": "^10.0.0",
     "zod": "^3.23.8",
-    "cloudinary": "^2.5.1",
-    "isomorphic-dompurify": "^2.16.0"
+    "cloudinary": "^2.5.1"
   },
   "devDependencies": {
     "@types/node": "^22",

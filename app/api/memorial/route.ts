@@ -1,10 +1,9 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { memorialSchema } from '@/lib/validation';
 import { sanitizeName } from '@/lib/utils';
-import DOMPurify from 'isomorphic-dompurify';
-
 // Rate limiting map (in production, use Redis)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
@@ -65,9 +64,8 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Sanitize name
-        const sanitizedName = DOMPurify.sanitize(sanitizeName(name));
-
+        // استبدل السطر القديم بالسطر ده:
+        const sanitizedName = sanitizeName(name).trim();
         // Convert image to buffer
         const bytes = await imageFile.arrayBuffer();
         const buffer = Buffer.from(bytes);
