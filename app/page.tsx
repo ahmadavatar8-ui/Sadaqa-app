@@ -7,51 +7,52 @@ import Image from 'next/image';
 export default function HomePage() {
     return (
         <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
-            {/* Elegant animated background elements */}
+            {/* Subtle ambient background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div
-                    className="absolute top-20 right-20 w-72 h-72 bg-emerald-200/30 rounded-full opacity-20 blur-3xl"
+                    className="absolute top-20 right-20 w-96 h-96 bg-emerald-200/10 rounded-full opacity-20 blur-3xl"
                     animate={{
-                        scale: [1, 1.3, 1],
-                        opacity: [0.15, 0.3, 0.15],
+                        scale: [1, 1.2, 1],
+                        opacity: [0.15, 0.25, 0.15],
                     }}
                     transition={{
-                        duration: 10,
+                        duration: 15,
                         repeat: Infinity,
                         ease: 'easeInOut',
                     }}
                 />
                 <motion.div
-                    className="absolute bottom-20 left-20 w-96 h-96 bg-gold-200/25 rounded-full opacity-20 blur-3xl"
+                    className="absolute bottom-20 left-20 w-96 h-96 bg-gold-200/10 rounded-full opacity-15 blur-3xl"
                     animate={{
-                        scale: [1, 1.4, 1],
-                        opacity: [0.2, 0.35, 0.2],
+                        scale: [1, 1.3, 1],
+                        opacity: [0.1, 0.2, 0.1],
                     }}
                     transition={{
-                        duration: 12,
+                        duration: 18,
                         repeat: Infinity,
                         ease: 'easeInOut',
-                        delay: 1.5,
+                        delay: 2,
                     }}
                 />
             </div>
 
             {/* Content */}
             <div className="relative z-10 max-w-4xl mx-auto text-center">
-                {/* Premium Logo Image with Glow - Ruqah Calligraphy */}
+                {/* Luxury Heritage Logo */}
                 <motion.div
-                    initial={{ opacity: 0, y: -30 }}
+                    initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                    className="mb-16"
+                    transition={{ duration: 1.2 }}
+                    className="mb-20"
                 >
+                    {/* Logo with soft circular frame */}
                     <motion.div
                         className="relative inline-block"
                         animate={{
-                            y: [0, -10, 0],
+                            y: [0, -6, 0],
                         }}
                         transition={{
-                            duration: 4,
+                            duration: 6,
                             repeat: Infinity,
                             ease: 'easeInOut',
                         }}
@@ -59,77 +60,81 @@ export default function HomePage() {
                         <motion.div
                             animate={{
                                 filter: [
-                                    'drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))',
-                                    'drop-shadow(0 0 40px rgba(234, 179, 8, 0.6))',
-                                    'drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))',
+                                    'drop-shadow(0 0 15px rgba(199, 167, 74, 0.15))',
+                                    'drop-shadow(0 0 25px rgba(199, 167, 74, 0.25))',
+                                    'drop-shadow(0 0 15px rgba(199, 167, 74, 0.15))',
                                 ],
                             }}
                             transition={{
-                                duration: 3,
+                                duration: 4,
                                 repeat: Infinity,
                                 ease: 'easeInOut',
                             }}
                         >
                             <Image
                                 src="/sadaqa-logo.png"
-                                alt="صدقة - Sadaqa"
-                                width={350}
-                                height={350}
+                                alt="صدقة - Sadaqa Jariyah"
+                                width={400}
+                                height={400}
                                 priority
-                                className="w-64 h-64 md:w-80 md:h-80 object-contain mx-auto"
+                                className="w-72 h-72 md:w-96 md:h-96 object-contain mx-auto"
                             />
                         </motion.div>
                     </motion.div>
+
+                    {/* Elegant golden divider */}
                     <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: '12rem' }}
-                        transition={{ delay: 0.8, duration: 1 }}
-                        className="h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto rounded-full shadow-gold"
+                        animate={{ width: '8rem' }}
+                        transition={{ delay: 1, duration: 1.2 }}
+                        className="h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto rounded-full opacity-40"
                     />
                 </motion.div>
 
-                {/* Hero Text - Premium */}
+                {/* Hero Text - Luxury Heritage */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                    className="mb-12"
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-charcoal-800 mb-8 leading-relaxed font-cairo">
+                    <h1 className="text-5xl md:text-6xl font-bold text-charcoal-800 mb-6 leading-relaxed font-amiri">
                         صدقة جارية رقمية
                         <br />
-                        <span className="bg-gradient-to-r from-emerald-600 to-gold-500 bg-clip-text text-transparent">
-                            تبقى أثرًا لا ينقطع
+                        <span className="text-emerald-600 text-4xl md:text-5xl">
+                            تبقى إرثاً لا ينقطع
                         </span>
-                    </h2>
-                    <p className="text-xl md:text-2xl text-emerald-700/90 max-w-2xl mx-auto leading-relaxed font-cairo">
+                    </h1>
+                    <p className="text-xl md:text-2xl text-charcoal-500 max-w-2xl mx-auto leading-relaxed font-cairo">
                         أنشئ صفحة خاصة لذكرى من تحب، تحتوي على دعاء وقرآن وأذكار
                         <br />
                         شاركها مع من تحب ليكون لك أجر كل من يقرأ ويذكر الله
                     </p>
                 </motion.div>
 
-                {/* Premium CTA Button */}
+                {/* Luxury CTA Buttons */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
+                    {/* Primary Button - Elegant Emerald */}
                     <Link href="/create">
                         <motion.button
-                            className="group relative px-14 py-6 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white text-2xl font-bold rounded-2xl overflow-hidden shadow-emerald transition-smooth hover:shadow-2xl"
-                            whileHover={{ scale: 1.05, y: -3 }}
+                            className="group relative px-12 py-5 bg-gradient-to-br from-emerald-600 via-emerald-500 to-emerald-600 text-white text-xl font-semibold rounded-2xl overflow-hidden shadow-emerald transition-luxury"
+                            whileHover={{ scale: 1.03, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            {/* Subtle overlay on hover */}
+                            {/* Subtle inner glow on hover */}
                             <motion.div
-                                className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 opacity-0 group-hover:opacity-100"
+                                className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-700 opacity-0 group-hover:opacity-100"
                                 transition={{ duration: 0.3 }}
                             />
                             <span className="relative z-10 flex items-center gap-3 font-cairo">
-                                ابدأ الآن
+                                أنشئ صفحة صدقة
                                 <svg
-                                    className="w-7 h-7 transition-transform group-hover:-translate-x-2"
+                                    className="w-6 h-6 transition-transform group-hover:-translate-x-1"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -137,36 +142,45 @@ export default function HomePage() {
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        strokeWidth={2.5}
+                                        strokeWidth={2}
                                         d="M15 19l-7-7 7-7"
                                     />
                                 </svg>
                             </span>
                         </motion.button>
                     </Link>
+
+                    {/* Secondary Button - Elegant Gold Border */}
+                    <motion.button
+                        className="px-12 py-5 bg-transparent border-2 border-gold-500/40 hover:border-gold-500/60 text-charcoal-700 text-xl font-semibold rounded-2xl transition-luxury hover:bg-gold-500/5 font-cairo"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                    >
+                        تعرّف على المنصة
+                    </motion.button>
                 </motion.div>
 
-                {/* Premium Features */}
+                {/* Luxury Features */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.7 }}
-                    className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
+                    transition={{ duration: 1, delay: 1.2 }}
+                    className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8"
                 >
                     {features.map((feature, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8 + index * 0.15 }}
-                            className="glass p-8 rounded-3xl shadow-emerald transition-smooth hover:shadow-gold border-2 border-emerald-100/30 hover:border-gold-200/50"
-                            whileHover={{ y: -8, scale: 1.03 }}
+                            transition={{ delay: 1.4 + index * 0.2 }}
+                            className="glass p-10 rounded-3xl shadow-emerald transition-luxury hover:shadow-gold border border-gold-500/5"
+                            whileHover={{ y: -6, scale: 1.02 }}
                         >
-                            <div className="text-5xl mb-5">{feature.icon}</div>
-                            <h3 className="text-2xl font-bold text-emerald-700 mb-3 font-cairo">
+                            <div className="text-5xl mb-6">{feature.icon}</div>
+                            <h3 className="text-2xl font-bold text-emerald-700 mb-4 font-cairo">
                                 {feature.title}
                             </h3>
-                            <p className="text-emerald-600/80 text-lg leading-relaxed font-cairo">
+                            <p className="text-charcoal-500 text-lg leading-relaxed font-cairo">
                                 {feature.description}
                             </p>
                         </motion.div>
@@ -174,14 +188,14 @@ export default function HomePage() {
                 </motion.div>
             </div>
 
-            {/* Premium Footer */}
+            {/* Footer - Quranic Quote */}
             <motion.footer
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.2 }}
-                className="absolute bottom-8 text-center"
+                transition={{ duration: 1.2, delay: 2 }}
+                className="absolute bottom-10 text-center"
             >
-                <p className="font-amiri text-emerald-600/70 text-xl md:text-2xl">
+                <p className="font-amiri text-emerald-600/60 text-2xl md:text-3xl">
                     إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
                 </p>
             </motion.footer>
@@ -193,12 +207,12 @@ const features = [
     {
         icon: '📿',
         title: 'أذكار تفاعلية',
-        description: 'عدادات للأذكار تُحفظ وتُحدث تلقائياً مع كل زيارة',
+        description: 'عدادات للأذكار تبدأ من الصفر لكل زائر، مع تجربة شخصية هادئة',
     },
     {
         icon: '📖',
         title: 'قرآن وأدعية',
-        description: 'سور قرآنية كاملة وأدعية مخصصة للمتوفي',
+        description: 'سور قرآنية كاملة وأدعية مخصصة للمتوفي بتصميم أنيق',
     },
     {
         icon: '🔗',
