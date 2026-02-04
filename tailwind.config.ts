@@ -35,12 +35,18 @@ const config: Config = {
           800: '#4f431e',
           900: '#28210f',
         },
-        // Background - Soft Warm Off-White
-        background: '#F7F5EF',
+        // Background
+        surface: {
+          50: '#F7F5EF',  // Main Background
+          100: '#f0ede5',
+          200: '#e8e4d9',
+        },
         // Text Colors
-        text: {
-          primary: '#1C1C1C', // Charcoal
-          muted: '#6F6F6F',   // Muted Gray
+        ink: {
+          900: '#1C1C1C', // Primary Text (Charcoal)
+          600: '#4A4A4A', // Secondary Text
+          400: '#6F6F6F', // Muted Text
+          200: '#A0A0A0', // Light Text
         },
       },
       fontFamily: {
@@ -49,18 +55,22 @@ const config: Config = {
       },
       borderRadius: {
         'btn': '14px',
-        'card': '16px',
-        'lg': '12px',
+        'card': '20px',
+        'modal': '24px',
       },
       boxShadow: {
-        'btn': '0 4px 14px rgba(15, 107, 85, 0.25)',
-        'btn-hover': '0 6px 20px rgba(15, 107, 85, 0.35)',
-        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
-        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+        'btn': '0 4px 14px rgba(15, 107, 85, 0.3)',
+        'btn-hover': '0 6px 20px rgba(15, 107, 85, 0.4)',
+        'card': '0 4px 24px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 8px 32px rgba(0, 0, 0, 0.1)',
+        'modal': '0 20px 60px rgba(0, 0, 0, 0.15)',
+        'glow-gold': '0 0 30px rgba(199, 167, 74, 0.3)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
+        'fade-in': 'fadeIn 0.5s ease-out',
         'slide-up': 'slideUp 0.5s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         fadeIn: {
@@ -71,9 +81,17 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 20px rgba(199, 167, 74, 0.2)' },
+          '100%': { boxShadow: '0 0 40px rgba(199, 167, 74, 0.4)' },
+        },
       },
       backgroundImage: {
-        'islamic-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F6B55' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        'islamic-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F6B55' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
     },
   },

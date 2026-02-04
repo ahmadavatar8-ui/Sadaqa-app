@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ========================================
-   GLOBAL BASE STYLES
+   BASE STYLES
    ======================================== */
 
 @layer base {
@@ -12,8 +12,8 @@
   }
 
   body {
-    @apply bg-background text-text-primary;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F6B55' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    @apply bg-surface-50 text-ink-900;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230F6B55' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -25,56 +25,99 @@
    ======================================== */
 
 @layer components {
+  /* ===== BUTTONS ===== */
 
-  /* Primary Button - HIGHLY VISIBLE */
+  /* Primary Button - Solid, Highly Visible */
   .btn-primary {
-    @apply px-8 py-4 bg-primary-500 text-white font-bold text-lg rounded-btn shadow-btn;
+    @apply inline-flex items-center justify-center gap-3;
+    @apply px-8 py-4 min-w-[200px];
+    @apply bg-primary-500 text-white font-bold text-lg;
+    @apply rounded-btn shadow-btn;
     @apply transition-all duration-300 ease-out;
-    @apply hover:bg-primary-600 hover:shadow-btn-hover;
-    @apply active:scale-[0.98];
   }
 
-  /* Secondary Button */
+  .btn-primary:hover {
+    @apply bg-primary-600 shadow-btn-hover;
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Secondary Button - Outlined */
   .btn-secondary {
-    @apply px-8 py-4 bg-transparent border-2 border-primary-500 text-primary-500 font-bold text-lg rounded-btn;
+    @apply inline-flex items-center justify-center gap-3;
+    @apply px-8 py-4 min-w-[200px];
+    @apply bg-transparent border-2 border-primary-500 text-primary-500 font-bold text-lg;
+    @apply rounded-btn;
     @apply transition-all duration-300 ease-out;
-    @apply hover:bg-primary-500 hover:text-white;
   }
 
-  /* Card Style */
+  .btn-secondary:hover {
+    @apply bg-primary-500 text-white;
+  }
+
+  /* Gold Accent Button */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-3;
+    @apply px-8 py-4;
+    @apply bg-accent-500 text-white font-bold text-lg;
+    @apply rounded-btn;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .btn-gold:hover {
+    @apply bg-accent-600;
+  }
+
+  /* ===== CARDS ===== */
+
   .card {
     @apply bg-white rounded-card shadow-card p-8;
     @apply transition-all duration-300 ease-out;
-    @apply hover:shadow-card-hover;
   }
 
-  /* Input Field */
+  .card:hover {
+    @apply shadow-card-hover;
+  }
+
+  /* ===== FORM ELEMENTS ===== */
+
   .input-field {
-    @apply w-full px-4 py-4 bg-white border-2 border-gray-200 rounded-lg text-lg;
+    @apply w-full px-5 py-4 bg-white border-2 border-ink-200/50 rounded-btn text-lg;
     @apply transition-all duration-200;
-    @apply focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none;
+    @apply focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 focus:outline-none;
+    @apply placeholder:text-ink-400;
   }
 
-  /* Glass Card (subtle) */
-  .glass-card {
-    @apply bg-white/90 backdrop-blur-sm rounded-card shadow-card p-8;
+  /* ===== MODAL ===== */
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50;
+    @apply flex items-center justify-center p-4;
   }
-}
 
-/* ========================================
-   UTILITY STYLES
-   ======================================== */
+  .modal-content {
+    @apply bg-surface-50 rounded-modal shadow-modal p-8 md:p-12 max-w-xl w-full;
+    @apply animate-scale-in;
+  }
 
-@layer utilities {
+  /* ===== DIVIDERS ===== */
 
-  /* Gold Divider */
   .divider-gold {
     @apply h-1 w-24 bg-accent-500 rounded-full mx-auto;
   }
 
-  /* Text Gradient */
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-500 to-primary-600 bg-clip-text text-transparent;
+  .divider-gold-full {
+    @apply h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent;
+  }
+
+  /* ===== DEFAULT AVATAR ===== */
+
+  .avatar-placeholder {
+    @apply w-full h-full rounded-full bg-primary-500/20 flex items-center justify-center;
+    @apply text-primary-500 font-bold text-5xl font-amiri;
   }
 }
 

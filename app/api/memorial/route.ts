@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { memorialSchema } from '@/lib/validation';
 import { sanitizeName } from '@/lib/utils';
+
 // Rate limiting map (in production, use Redis)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
         const formData = await request.formData();
         const name = formData.get('name') as string;
         const gender = formData.get('gender') as string;
-        const imageFile = formData.get('image') as File;
+        const imageFile = formData.get('image') as File | null;
 
         // Validate input
         const validationResult = memorialSchema.safeParse({
@@ -56,33 +57,30 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Validate image
-        if (!imageFile || !(imageFile instanceof File)) {
-            return NextResponse.json(
-                { error: 'يرجى اختيار صورة' },
-                { status: 400 }
-            );
-        }
-
-        // استبدل السطر القديم بالسطر ده:
         const sanitizedName = sanitizeName(name).trim();
-        // Convert image to buffer
-        const bytes = await imageFile.arrayBuffer();
-        const buffer = Buffer.from(bytes);
 
-        // Upload to Cloudinary
-        const { url: imageUrl, publicId: imagePublicId } = await uploadImage(
-            buffer,
-            `memorial_${Date.now()}`
-        );
+        // Image is now OPTIONAL
+        let imageUrl: string | null = null;
+        let imagePublicId: string | null = null;
+
+        if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+            // Convert image to buffer
+            const bytes = await imageFile.arrayBuffer();
+            const buffer = Buffer.from(bytes);
+
+            // Upload to Cloudinary
+            const uploadResult = await uploadImage(buffer, `memorial_${Date.now()}`);
+            imageUrl = uploadResult.url;
+            imagePublicId = uploadResult.publicId;
+        }
 
         // Create memorial in database
         const memorial = await prisma.memorial.create({
             data: {
                 name: sanitizedName,
                 gender: gender as 'MALE' | 'FEMALE',
-                imageUrl,
-                imagePublicId,
+                imageUrl, // Can be null
+                imagePublicId, // Can be null
                 counters: {
                     create: {
                         subhanAllah: 0,
