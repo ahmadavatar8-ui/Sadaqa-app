@@ -9,7 +9,7 @@ interface Memorial {
     id: string;
     name: string;
     gender: 'MALE' | 'FEMALE';
-    imageUrl: string | null;
+    imageUrl: string; // Always has a value (user-uploaded or default)
     counters: {
         subhanAllah: number;
         alhamdulillah: number;
@@ -50,12 +50,6 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
 
     const totalCount = Object.values(counters).reduce((a, b) => a + b, 0);
 
-    // Get first letter for default avatar
-    const getFirstLetter = (fullName: string): string => {
-        const firstName = fullName.trim().split(/\s+/)[0];
-        return firstName ? firstName.charAt(0) : 'ص';
-    };
-
     return (
         <main className="min-h-screen py-12 px-4">
             <div className="max-w-4xl mx-auto">
@@ -77,11 +71,12 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                     >
                         {/* === Layer 1: Outer Soft Glow === */}
                         <div
-                            className="absolute inset-0 rounded-full animate-pulse"
+                            className="absolute inset-0 rounded-full"
                             style={{
                                 background: 'radial-gradient(circle, rgba(199, 167, 74, 0.25) 0%, rgba(199, 167, 74, 0.1) 40%, transparent 70%)',
                                 transform: 'scale(1.25)',
                                 filter: 'blur(8px)',
+                                animation: 'pulse 3s ease-in-out infinite',
                             }}
                         />
 
@@ -95,49 +90,20 @@ export default function MemorialContent({ memorial }: { memorial: Memorial }) {
                         >
                             {/* === Layer 3: White Inner Border === */}
                             <div className="w-full h-full rounded-full bg-white p-1.5 shadow-inner">
-                                {/* === Layer 4: Image/Avatar Container - PERFECT CIRCLE === */}
+                                {/* === Layer 4: Image Container - PERFECT CIRCLE === */}
                                 <div className="w-full h-full rounded-full overflow-hidden relative">
-                                    {memorial.imageUrl ? (
-                                        /* ===== UPLOADED PHOTO ===== */
-                                        <Image
-                                            src={memorial.imageUrl}
-                                            alt={memorial.name}
-                                            fill
-                                            sizes="240px"
-                                            className="object-cover"
-                                            priority
-                                            style={{
-                                                borderRadius: '50%',
-                                            }}
-                                        />
-                                    ) : (
-                                        /* ===== DEFAULT AVATAR - First Letter ===== */
-                                        <div
-                                            className="w-full h-full rounded-full flex items-center justify-center relative"
-                                            style={{
-                                                background: 'linear-gradient(145deg, #DFF5EE 0%, #c8ebe0 50%, #b5e0d3 100%)',
-                                            }}
-                                        >
-                                            {/* Subtle inner shadow for depth */}
-                                            <div
-                                                className="absolute inset-0 rounded-full"
-                                                style={{
-                                                    boxShadow: 'inset 0 4px 12px rgba(0, 0, 0, 0.05)',
-                                                }}
-                                            />
-                                            {/* First Letter */}
-                                            <span
-                                                className="relative z-10 font-amiri font-bold"
-                                                style={{
-                                                    fontSize: '5rem',
-                                                    color: '#0F6B55',
-                                                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                                }}
-                                            >
-                                                {getFirstLetter(memorial.name)}
-                                            </span>
-                                        </div>
-                                    )}
+                                    {/* Always display the image (user-uploaded or default) */}
+                                    <Image
+                                        src={memorial.imageUrl}
+                                        alt={memorial.name}
+                                        fill
+                                        sizes="240px"
+                                        className="object-cover"
+                                        priority
+                                        style={{
+                                            borderRadius: '50%',
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>

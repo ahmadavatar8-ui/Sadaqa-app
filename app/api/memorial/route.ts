@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { memorialSchema } from '@/lib/validation';
 import { sanitizeName } from '@/lib/utils';
+import { DEFAULT_AVATAR_URL, DEFAULT_AVATAR_PUBLIC_ID } from '@/lib/constants';
 
 // Rate limiting map (in production, use Redis)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -59,28 +60,34 @@ export async function POST(request: NextRequest) {
 
         const sanitizedName = sanitizeName(name).trim();
 
-        // Image is now OPTIONAL
-        let imageUrl: string | null = null;
-        let imagePublicId: string | null = null;
+        // Initialize with DEFAULT AVATAR (no null values!)
+        let imageUrl: string = DEFAULT_AVATAR_URL;
+        let imagePublicId: string = DEFAULT_AVATAR_PUBLIC_ID;
 
+        // If user uploaded an image, upload it to Cloudinary
         if (imageFile && imageFile instanceof File && imageFile.size > 0) {
-            // Convert image to buffer
-            const bytes = await imageFile.arrayBuffer();
-            const buffer = Buffer.from(bytes);
+            try {
+                // Convert image to buffer
+                const bytes = await imageFile.arrayBuffer();
+                const buffer = Buffer.from(bytes);
 
-            // Upload to Cloudinary
-            const uploadResult = await uploadImage(buffer, `memorial_${Date.now()}`);
-            imageUrl = uploadResult.url;
-            imagePublicId = uploadResult.publicId;
+                // Upload to Cloudinary
+                const uploadResult = await uploadImage(buffer, `memorial_${Date.now()}`);
+                imageUrl = uploadResult.url;
+                imagePublicId = uploadResult.publicId;
+            } catch (uploadError) {
+                console.error('Image upload failed, using default avatar:', uploadError);
+                // Keep default avatar values if upload fails
+            }
         }
 
-        // Create memorial in database
+        // Create memorial in database - ALWAYS with a valid imageUrl
         const memorial = await prisma.memorial.create({
             data: {
                 name: sanitizedName,
                 gender: gender as 'MALE' | 'FEMALE',
-                imageUrl, // Can be null
-                imagePublicId, // Can be null
+                imageUrl,         // Always has a value (user image or default)
+                imagePublicId,    // Always has a value
                 counters: {
                     create: {
                         subhanAllah: 0,
